@@ -1,0 +1,172 @@
+<html>
+<head>
+	<meta charset='utf-8'>
+	<title>表格测试</title>
+	<link rel="stylesheet" type="text/css" href="../../src/tdxgrid/tdxgrid.css">
+	<script type="text/javascript" src='../lib/jquery-1.11.3.min.js'></script>
+	<script type="text/javascript" src='../../src/tdxgrid/tdxgrid.js'></script>
+</head>
+
+<style type="text/css">
+	.tt {
+		/*width: 600px;
+		height: 300px;
+		overflow: auto;*/
+
+		height: 600px;
+	}
+</style>
+<body>
+
+<button onclick='exportExcel(1,2)'>导出内容到Excel</button>
+
+<div id='tt' class='tt'></div>
+
+<!-- <div id='tt2' style='height:300px;'></div> -->
+
+</body>
+
+<script type="text/javascript">
+
+
+$(function() {
+
+	var fmt = function(v) {
+		if (v > 0) return "<span style='color:red;'>" + v + "</span>";
+		else return "<span style='color:green;'>" + v + "</span>";
+	}
+
+	var tg = $("#tt").tdxgrid({
+		cols: [
+			{"field": "A01", "title": "表头1", "align": "right", "formatter": fmt, "width": 120},
+			{"field": "A02", "title": "表头2"},
+			{"title": "综合1", "cols": [
+				{"field": "A03", "title": "表头3"},
+				{"field": "A04", "title": "表头4"},
+				{"field": "A05", "title": "表头5"}
+			]},
+			{"field": "A06", "title": "表头6"},
+			{"field": "A07", "title": "表头7"},
+			{"title": "综合2", "cols": [
+				{"field": "A08", "title": "表头8"},
+				{"field": "A09", "title": "表头9"},
+				{"field": "A10", "title": "表头10"}
+			]}
+		]
+	});
+
+	// var tg2 = $("#tt2").tdxgrid({
+	// 	cols: [
+	// 		{"field": "A01", "title": "表头1"},
+	// 		{"field": "A02", "title": "表头2"},
+	// 		{"title": "综合1", "cols": [
+	// 			{"field": "A03", "title": "表头3"},
+	// 			{"field": "A04", "title": "表头4"},
+	// 			{"field": "A05", "title": "表头5"}
+	// 		]},
+	// 		{"field": "A06", "title": "表头6"},
+	// 		{"field": "A07", "title": "表头7"},
+	// 		{"title": "综合2", "cols": [
+	// 			{"field": "A08", "title": "表头8"},
+	// 			{"field": "A09", "title": "表头9"},
+	// 			{"field": "A10", "title": "表头10"}
+	// 		]}
+	// 	]
+	// });
+
+	data = [];
+	for(var i = 0; i < 20; i++) {
+		data.push({
+			"A01": (Math.random() * 10000 - 5000).toFixed(3),  // 数字
+			"A02": "a" + i,
+			"A03": "A03" + i,
+			"A04": "A04" + i,
+			"A05": "A05" + i,
+			"A06": "A06" + i,
+			"A07": "A07" + i,
+			"A08": "A08" + i,
+			"A09": "A09" + i,
+			"A10": "A10" + i
+		});
+	}
+
+	tg.loaddata(data);
+
+	// tg.loaddata([]);
+
+	// tg2.loaddata(data);
+
+});
+
+// function exportExcel() {
+// 	debugger;
+// 	// console.log(arguments);
+// }
+
+var exportExcel = (function() {
+
+	var uri = 'data:application/vnd.ms-excel;charset=utf-8;base64,';
+	var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
+
+	var base64 = function(s) { 
+		var str = window.btoa(unescape(encodeURIComponent(s))) 
+		console.log(decodeURIComponent(str));
+		return str;
+		// return window.btoa(unescape(s));
+	};
+
+	var format = function(s, c) {
+		return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) 
+	};
+
+	var formTableStr = function() {
+
+		var tableStr = "";
+
+		// 表头部分添加
+		tableStr += "<tr>"
+					+ "<td>" + "表头1" + "</td>"
+					+ "<td>" + "表头2" + "</td>"
+					+ "<td>" + "表头3" + "</td>"
+					+ "<td>" + "表头4" + "</td>"
+					+ "<td>" + "表头5" + "</td>"
+					+ "<td>" + "表头6" + "</td>"
+					+ "<td>" + "表头7" + "</td>"
+					+ "<td>" + "表头8" + "</td>"
+					+ "<td>" + "表头9" + "</td>"
+					+ "<td>" + "表头10" + "</td>"
+				+ "</tr>";
+
+		// 数据部分添加
+		for(var i = 0; i< data.length; i++) {
+			tableStr += "<tr>"
+						+ "<td>" + data[i]["A01"] + "</td>"
+						+ "<td>" + data[i]["A02"] + "</td>"
+						+ "<td>" + data[i]["A03"] + "</td>"
+						+ "<td>" + data[i]["A04"] + "</td>"
+						+ "<td>" + data[i]["A05"] + "</td>"
+						+ "<td>" + data[i]["A06"] + "</td>"
+						+ "<td>" + data[i]["A07"] + "</td>"
+						+ "<td>" + data[i]["A08"] + "</td>"
+						+ "<td>" + data[i]["A09"] + "</td>"
+						+ "<td>" + data[i]["A10"] + "</td>"
+					+ "</tr>";
+		}
+
+		return tableStr;
+
+	}
+
+	return function() {
+		var ctx = {
+			worksheet: name || 'Worksheet', 
+			table: formTableStr()
+		}
+
+		window.location.href = uri + base64(format(template, ctx));
+	}
+
+})()
+
+</script>
+</html>

@@ -1,0 +1,84 @@
+.tdxgrid {
+	font: 12px/20px "微软雅黑";
+	overflow: hidden;
+	/*border: 1px solid grey;*/
+}
+
+.tdxgrid table {
+	table-layout: fixed;
+}
+
+.tdxgrid-headerwrapper {
+	position: relative;
+    background: #eee;
+    background: -moz-linear-gradient(top, #f9f9f9 0%, #eaeaea 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f9f9f9), color-stop(100%,#eaeaea));
+    background: -webkit-linear-gradient(top, #f9f9f9 0%,#eaeaea 100%);
+    background: -o-linear-gradient(top, #f9f9f9 0%,#eaeaea 100%);
+    background: -ms-linear-gradient(top, #f9f9f9 0%,#eaeaea 100%);
+    background: linear-gradient(to bottom, #f9f9f9 0%,#eaeaea 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', endColorstr='#eaeaea',GradientType=0 );
+    -moz-box-shadow: 0 0px 2px #bbb;
+    -webkit-box-shadow: 0 0px 2px #bbb;
+    box-shadow: 0 0px 2px #bbb;
+}
+
+.tdxgrid-headerwrapper table {
+	font: 13px/24px "微软雅黑";
+}
+
+.tdxgrid-bodywrapper {
+	position: relative;
+	overflow: auto;
+}
+
+.tdxgrid-bodywrapper table {
+	font: 12px/20px "微软雅黑";
+}
+
+.tdxgrid-header th, .tdxgrid-body td {
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #d2d2d2;
+	overflow: hidden;
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow:ellipsis;
+}
+
+.tdxgrid-titlewrapper {
+	position: relative;
+}
+
+.tdxgrid-title:hover {
+	cursor: hand;
+}
+
+.tdxgrid-colresize {
+	position: absolute;
+	top: 0;
+	right: -6px;
+	width: 8px;
+	height: 100%;
+	cursor: col-resize;
+}
+
+.tdxgrid-sort {
+    overflow: hidden;
+    display: none;
+    width: 0px;
+    height: 0px;
+    vertical-align: center;
+}
+.sort-desc {
+	display: inline-block;
+	border-top: 6px solid red;
+	border-left: 3px solid #fff;
+	border-right: 3px solid #fff;
+}
+.sort-asc {
+	display: inline-block;
+	border-bottom: 6px solid red;
+	border-left: 3px solid #fff;
+	border-right: 3px solid #fff;	
+}
